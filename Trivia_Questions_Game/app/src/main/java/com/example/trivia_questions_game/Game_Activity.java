@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class Game_Activity extends AppCompatActivity {
 
@@ -37,7 +38,7 @@ public class Game_Activity extends AppCompatActivity {
     private int question_num = 0;
     private int score = 0;
 
-    private Questions questions = new Questions();
+    private Questions questions = new Questions(10);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,14 @@ public class Game_Activity extends AppCompatActivity {
 
         // setting exit fade animation duration to 2 seconds
         animationDrawable.setExitFadeDuration(2000);
+
+        try {
+            questions.execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         textViewQuestion = findViewById(R.id.text_view_question);
         textViewScore = findViewById(R.id.text_view_score);
