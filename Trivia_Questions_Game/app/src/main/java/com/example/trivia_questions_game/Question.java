@@ -6,9 +6,7 @@ public class Question {
     private String   correctAnswer;
     private String[] answers;
 
-    public Question(){
-
-    }
+    public Question() { }
 
     public Question(String Question, String[] answers, String correctAnswer) {
         this.question      = Question;
@@ -21,9 +19,8 @@ public class Question {
     }
 
     public String getAnswer(int i){
-        return answers[i-1];
+        return answers[i - 1];
     }
-
 
     public String getCorrectAnswer(){
         return correctAnswer;

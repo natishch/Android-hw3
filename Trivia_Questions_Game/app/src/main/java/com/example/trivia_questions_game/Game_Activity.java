@@ -33,7 +33,6 @@ public class Game_Activity extends AppCompatActivity {
     private RadioButton rb3;
     private RadioButton rb4;
     private Button buttonConfirmNext;
-
     private RadioButton radioButton;
     private String userName;
     private int numOfQues;
@@ -128,7 +127,7 @@ public class Game_Activity extends AppCompatActivity {
         });
     }
 
-    private void nextQuestion(int i){
+    private void nextQuestion(int i) {
             textViewQuestion.setText(ques[question_num].getTextQuestion());
             rb1.setText(ques[question_num].getAnswer(1));
             rb2.setText(ques[question_num].getAnswer(2));
@@ -141,7 +140,7 @@ public class Game_Activity extends AppCompatActivity {
         if(correctAns == numOfQues){
             Intent intent = new Intent(this, theGeniusOne.class);
             startActivity(intent);
-        } else{
+        } else {
             final AlertDialog dialog = new AlertDialog.Builder(this)
                     .setTitle("Game Over")
                     .setMessage(userName+ " your score is: " + String.valueOf(score))

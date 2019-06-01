@@ -36,7 +36,7 @@ public class Questions extends AsyncTask<Void,Void,Void> {
         String line = "";
         String apiAnswer = "";
 
-        try{
+        try {
             URL url = new URL(ourUrl);
             HttpURLConnection httpUC = (HttpURLConnection) url.openConnection();
             InputStream inStream = httpUC.getInputStream();
