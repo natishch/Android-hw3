@@ -29,7 +29,7 @@ public class Questions extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        
+
         questions = new Question[numOfQues];
         String ourUrl = "https://opentdb.com/api.php?amount="+String.valueOf(numOfQues)+"&type=multiple";
         Log.d(null, "doInBackground:"+ourUrl);
