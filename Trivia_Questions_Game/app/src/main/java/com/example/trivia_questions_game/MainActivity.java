@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void open_Game_Activity(){
+    //Start trivia activity
+    public void open_Game_Activity() {
         Intent intent = new Intent(this, name_and_number.class);
         startActivity(intent);
     }

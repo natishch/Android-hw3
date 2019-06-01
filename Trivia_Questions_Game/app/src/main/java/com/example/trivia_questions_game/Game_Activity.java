@@ -33,7 +33,6 @@ public class Game_Activity extends AppCompatActivity {
     private RadioButton rb3;
     private RadioButton rb4;
     private Button buttonConfirmNext;
-
     private RadioButton radioButton;
     private String userName;
     private int numOfQues;
@@ -128,7 +127,7 @@ public class Game_Activity extends AppCompatActivity {
         });
     }
 
-    private void nextQuestion(int i){
+    private void nextQuestion(int i) {
             textViewQuestion.setText(ques[question_num].getTextQuestion());
             rb1.setText(ques[question_num].getAnswer(1));
             rb2.setText(ques[question_num].getAnswer(2));

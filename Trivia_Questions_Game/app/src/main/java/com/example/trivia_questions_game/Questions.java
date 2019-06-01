@@ -36,7 +36,7 @@ public class Questions extends AsyncTask<Void,Void,Void> {
         String line = "";
         String apiAnswer = "";
 
-        try{
+        try {
             URL url = new URL(ourUrl);
             HttpURLConnection httpUC = (HttpURLConnection) url.openConnection();
             InputStream inStream = httpUC.getInputStream();
@@ -61,7 +61,8 @@ public class Questions extends AsyncTask<Void,Void,Void> {
             Random rand = new Random();
             String[] worngAns = new String[3];
             String correctAns;
-            for(int index=0; index < jsonArr.length(); index++){
+
+            for(int index=0; index < jsonArr.length(); index++) {
                 String[] ansOptions = new String[4];
                 JSONObject jsonQues = (JSONObject) jsonArr.get(index);
                 String check = jsonQues.toString();
@@ -75,7 +76,7 @@ public class Questions extends AsyncTask<Void,Void,Void> {
 
                 randNum = rand.nextInt(4);
                 worngIndex = 0;
-                for(int j=0; j < 4; j++){
+                for(int j=0; j < 4; j++) {
                     if(j == randNum){
                         ansOptions[j] = correctAns;
                     } else {
