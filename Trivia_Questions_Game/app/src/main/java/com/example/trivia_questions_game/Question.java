@@ -20,18 +20,10 @@ public class Question {
         return question;
     }
 
-    public String getAnswer1(){
-        return answers[0];
+    public String getAnswer(int i){
+        return answers[i-1];
     }
-    public String getAnswer2(){
-        return answers[1];
-    }
-    public String getAnswer3(){
-        return answers[2];
-    }
-    public String getAnswer4(){
-        return answers[3];
-    }
+
 
     public String getCorrectAnswer(){
         return correctAnswer;

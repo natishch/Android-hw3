@@ -56,21 +56,21 @@ public class Questions extends AsyncTask<Void,Void,Void> {
             JSONObject jsonObj = new JSONObject(apiAnswer);
             JSONArray jsonArr = jsonObj.getJSONArray("results");
 
-            String[] ansOptions = new String[4];
             int randNum,worngIndex;
             Random rand = new Random();
             String[] worngAns = new String[3];
             String correctAns;
             for(int index=0; index < jsonArr.length(); index++){
+                String[] ansOptions = new String[4];
                 JSONObject jsonQues = (JSONObject) jsonArr.get(index);
+                String check = jsonQues.toString();
+                Log.d(null,check);
                 JSONArray incorrentArr = jsonQues.getJSONArray("incorrect_answers");
 
                 for(int i=0; i < 3; i++){
                     worngAns[i] = incorrentArr.getString(i);
-                    worngAns[i].replaceAll("&quot;","\"");
                 }
                 correctAns = (String) jsonQues.get("correct_answer");
-                correctAns.replaceAll("&quot;","\"");
 
                 randNum = rand.nextInt(4);
                 worngIndex = 0;
@@ -83,7 +83,11 @@ public class Questions extends AsyncTask<Void,Void,Void> {
                 }
 
                 questions[index] = new Question((String) jsonQues.get("question"),ansOptions,correctAns);
-
+                Log.d(null,"questions"+index+": ques: "+questions[index].getTextQuestion());
+                Log.d(null,"questions"+index+": ans1: "+questions[index].getAnswer(1));
+                Log.d(null,"questions"+index+": ans2: "+questions[index].getAnswer(2));
+                Log.d(null,"questions"+index+": ans3: "+questions[index].getAnswer(3));
+                Log.d(null,"questions"+index+": ans4: "+questions[index].getAnswer(4));
             }
 
         } catch (JSONException e) {
@@ -98,7 +102,7 @@ public class Questions extends AsyncTask<Void,Void,Void> {
         super.onPostExecute(aVoid);
     }
 
-    public Question getQuestion(int index) {
-        return questions[index];
+    public Question[] getQuestions() {
+        return questions;
     }
 }

@@ -35,15 +35,22 @@ public class Game_Activity extends AppCompatActivity {
     private Button buttonConfirmNext;
 
     private RadioButton radioButton;
+    private String userName;
+    private int numOfQues;
     private int question_num = 0;
+    private int correctAns=0;
     private int score = 0;
-
-    private Questions questions = new Questions(10);
+    private Question[] ques;
+    private Questions questions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        userName = this.getIntent().getExtras().getString("user_name");
+        numOfQues = this.getIntent().getExtras().getInt("question_num");
+
+        questions = new Questions(numOfQues);
 
         // init constraintLayout
         relativeLayout = (RelativeLayout) findViewById(R.id.rel_layout);
@@ -64,6 +71,7 @@ public class Game_Activity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        ques = questions.getQuestions();
 
         textViewQuestion = findViewById(R.id.text_view_question);
         textViewScore = findViewById(R.id.text_view_score);
@@ -75,72 +83,82 @@ public class Game_Activity extends AppCompatActivity {
         rb4 = findViewById(R.id.radio_button4);
         buttonConfirmNext = findViewById(R.id.button_confirm_next);
 
-        textViewQuestion.setText(questions.getQuestion(0).getTextQuestion());
-        rb1.setText(questions.getQuestion(0).getAnswer1());
-        rb2.setText(questions.getQuestion(0).getAnswer2());
-        rb3.setText(questions.getQuestion(0).getAnswer3());
-        rb4.setText(questions.getQuestion(0).getAnswer4());
+        textViewScore.setText("Score: 0");
+        textViewQuestionCount.setText("Question: 1/"+numOfQues);
+
+        textViewQuestion.setText(ques[question_num].getTextQuestion());
+        rb1.setText(ques[question_num].getAnswer(1));
+        rb2.setText(ques[question_num].getAnswer(2));
+        rb3.setText(ques[question_num].getAnswer(3));
+        rb4.setText(ques[question_num].getAnswer(4));
 
         buttonConfirmNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int selectedId = rbGroup.getCheckedRadioButtonId();
-                if(selectedId == -1){
-                    Toast.makeText(Game_Activity.this, "You have to choose answer",Toast.LENGTH_SHORT).show();
+
+            int selectedId = rbGroup.getCheckedRadioButtonId();
+            if(selectedId == -1){
+                Toast.makeText(Game_Activity.this, "You have to choose answer",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            else {
+                radioButton = findViewById(selectedId);
+
+                if(radioButton.getText().equals(ques[question_num].getCorrectAnswer())){
+                    Toast.makeText(Game_Activity.this, "Correct",Toast.LENGTH_SHORT).show();
+                    correctAns++;
+                    score = score + 10;
+                    textViewScore.setText("Score: " + String.valueOf(score));
+                    question_num++;
+                }
+                else{
+                    Toast.makeText(Game_Activity.this, "NOT Correct",Toast.LENGTH_SHORT).show();
+                    question_num++;
+
+                }
+
+                if (question_num == numOfQues){
+                    gameOver();
                     return;
                 }
-                else {
-                    radioButton = findViewById(selectedId);
-                    if (question_num >= 9){
-                        gameOver();
-                        return;
-                    }
 
-                    if(radioButton.getText().equals(questions.getQuestion(question_num).getCorrectAnswer())){
-                        Toast.makeText(Game_Activity.this, "Correct",Toast.LENGTH_SHORT).show();
-                        score = score + 10;
-                        textViewScore.setText("Score: " + String.valueOf(score));
-                    }
-                    else{
-                        Toast.makeText(Game_Activity.this, "NOT Correct",Toast.LENGTH_SHORT).show();
-                    }
-                }
-                if(question_num < 9)
-                    nextQuestion(question_num);
-                if(question_num == 9)
-                    gameOver();
-                question_num++;
+                nextQuestion(question_num);
+            }
             }
         });
     }
 
     private void nextQuestion(int i){
-            textViewQuestion.setText(questions.getQuestion(i + 1).getTextQuestion());
-            rb1.setText(questions.getQuestion(i + 1).getAnswer1());
-            rb2.setText(questions.getQuestion(i + 1).getAnswer2());
-            rb3.setText(questions.getQuestion(i + 1).getAnswer3());
-            rb4.setText(questions.getQuestion(i + 1).getAnswer4());
-            textViewQuestionCount.setText("Question: " + String.valueOf(i + 2) + "/10");
+            textViewQuestion.setText(ques[question_num].getTextQuestion());
+            rb1.setText(ques[question_num].getAnswer(1));
+            rb2.setText(ques[question_num].getAnswer(2));
+            rb3.setText(ques[question_num].getAnswer(3));
+            rb4.setText(ques[question_num].getAnswer(4));
+            textViewQuestionCount.setText("Question: " + String.valueOf(i + 1) + "/" + numOfQues);
     }
 
     private void gameOver() {
-        final AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("Game Over")
-                .setMessage("Your Score is: " + String.valueOf(score))
-                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Game_Activity.this, MainActivity.class);
-                        startActivity(intent);
-                    }
-                }).create();
-        dialog.setOnShowListener( new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface arg0) {
-                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
-            }
-        });
-
-        dialog.show();
+        if(correctAns == numOfQues){
+            Intent intent = new Intent(this, theGeniusOne.class);
+            startActivity(intent);
+        } else{
+            final AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setTitle("Game Over")
+                    .setMessage(userName+ " your score is: " + String.valueOf(score))
+                    .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Game_Activity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    }).create();
+            dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface arg0) {
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+                }
+            });
+            dialog.show();
+        }
     }
 
     @Override
@@ -150,7 +168,6 @@ public class Game_Activity extends AppCompatActivity {
             // start the animation
             animationDrawable.start();
         }
-
     }
 
     @Override

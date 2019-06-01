@@ -13,7 +13,7 @@
         android:id="@+id/text_view_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Score: 0"
+        android:text="Score: "
         android:textColor="@android:color/white"
         />
 
@@ -21,7 +21,7 @@
         android:id="@+id/text_view_question_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Question: 1/10"
+        android:text="Question: "
         android:textColor="@android:color/white"
         android:layout_below="@id/text_view_score"
         />
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/radio_group"
         android:layout_marginBottom="90dp"
-        android:text="jklgjsdlkgjsdlk;gjsdlkgjls;kdjgsld"
+        android:text="qustion"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:text="לוי אשכול"
+            android:text="Option 1"
             />
 
         <RadioButton

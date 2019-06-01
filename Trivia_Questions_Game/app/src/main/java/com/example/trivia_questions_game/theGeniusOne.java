@@ -6,25 +6,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.time.Instant;
+public class theGeniusOne extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity {
-    private Button btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_the_genius_one);
 
-        btn = findViewById(R.id.button);
+        Button btn = (Button) findViewById(R.id.goHome);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                open_Game_Activity();
+                returnHome();
             }
         });
     }
-    public void open_Game_Activity(){
-        Intent intent = new Intent(this, name_and_number.class);
+
+    public void returnHome() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }
